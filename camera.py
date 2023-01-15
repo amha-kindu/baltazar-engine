@@ -1,0 +1,28 @@
+import glm
+
+FOV = 50
+NEAR = 0.1
+FAR = 100
+
+class Camera:
+
+    def __init__(self, app) -> None:
+        self.app = app
+
+        self.position = glm.vec3(2, 3, 3)
+        self.up = glm.vec3(0, 1, 0)
+
+        # Aspect ratio width / height
+        self.aspect_ratio = app.WIN_SIZE[0] / app.WIN_SIZE[1]
+
+        # View matrix
+        self.view_mat = self.get_view_matrix()
+
+        # Projection matrix
+        self.proj_mat = self.get_projection_matrix()
+
+    def get_view_matrix(self):
+        return glm.lookAt(self.position, glm.vec3(0), self.up)
+
+    def get_projection_matrix(self):
+        return glm.perspective(glm.radians(FOV), self.aspect_ratio, NEAR, FAR)
